@@ -23,3 +23,8 @@ docker run -d --name yugabyte2 --net=testnetwork -h=yugabyte2 -p7002:7000 yugaby
   --master_flags "ysql_num_shards_per_tserver=4" \
   --tserver_flags "ysql_num_shards_per_tserver=4,follower_unavailable_considered_failed_sec=30" \
   --daemon=false
+
+
+docker run -d --name prometheus --net=testnetwork -p 9090:9090 -h prometheus -v ./prometheus_yugabyte.yml:/etc/prometheus/prometheus.yml:ro prom/prometheus
+
+docker run -d --name grafana --network testnetwork -p 3000:3000 -h grafana grafana/grafana

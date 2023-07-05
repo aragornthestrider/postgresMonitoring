@@ -1,0 +1,22 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+scrape_configs:
+  - job_name: prometheus
+    static_configs:
+      - targets: ["prometheus:9090"]
+  - job_name: yugabytedb
+    metrics_path: /prometheus-metrics
+    static_configs:
+      - targets: ["yugabyte:7000", "yugabyte1:7000", "yugabyte2:7000"]
+        labels:
+          group: 'yb-master'
+      - targets: ["yugabyte:9000", "yugabyte1:9000", "yugabyte2:9000"]
+        labels:
+          group: 'yb-tserver'
+      - targets: ["yugabyte:12000", "yugabyte1:12000", "yugabyte2:12000"]
+        labels:
+          group: 'cql_export'
+      - targets: ["yugabyte:13000", "yugabyte1:13000", "yugabyte2:13000"]
+        labels:
+          group: 'ysql_export'
